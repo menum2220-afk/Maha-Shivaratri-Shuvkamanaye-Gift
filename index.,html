@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Surprise for Krishna Devi Rabha 🔱</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        body {
+            background: #000; color: #fff; margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+            overflow: hidden; font-family: 'Poppins', sans-serif;
+            border: 10px solid;
+            border-image: linear-gradient(45deg, red, yellow, lime, cyan, blue, magenta, red) 1;
+            animation: led-glow 3s linear infinite;
+        }
+        @keyframes led-glow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+        #balloon-screen { text-align: center; cursor: pointer; z-index: 100; }
+        .balloon { width: 120px; height: 150px; background: #ff4757; border-radius: 50%; margin: auto; position: relative; animation: float 3s infinite ease-in-out; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.2); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+        #main-content { display: none; text-align: center; width: 90%; max-width: 450px; animation: fadeIn 2s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .name-title { font-size: 2.2rem; color: gold; text-shadow: 0 0 20px gold; margin-bottom: 15px; font-weight: bold; }
+        .mahadev-img { width: 100%; border-radius: 20px; box-shadow: 0 0 30px gold; border: 2px solid gold; }
+        .wish-box { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; margin-top: 20px; border: 1px solid rgba(255, 215, 0, 0.3); line-height: 1.6; }
+        .reply-btn { background: linear-gradient(to right, #ffd700, #ff8c00); color: black; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); }
+        .reply-btn:active { transform: scale(0.9); }
+        #sent-msg { display: none; color: #00ffcc; font-size: 1.2rem; font-weight: bold; margin-top: 20px; animation: bounceIn 1s; }
+        @keyframes bounceIn { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="data:audio/mpeg;base64,REPLACE_WITH_BASE64_KRISHNA_MUSIC" type="audio/mpeg">
+    </audio>
+
+    <div id="balloon-screen" onclick="openSurprise()">
+        <div class="balloon"></div>
+        <h2 style="color: gold; margin-top: 30px; font-size: 1.5rem;">Krishna Devi, Ise Phod Do ❤️</h2>
+    </div>
+
+    <div id="main-content">
+        <div class="name-title">Hii Krishna Devi Rabha ✨</div>
+        <img id="mImg" src="data:image/png;base64,REPLACE_WITH_BASE64_MAHADEV_IMAGE" class="mahadev-img" alt="Mahadev">
+        
+        <div class="wish-box">
+            <p style="color: #00ffcc; font-size: 1.2rem; font-weight: 500;">
+                🔱 Mahashivratri ki dher saari shubhkamnaye! 🔱<br><br>
+                Bhagwan Shiv aapko aur aapke paribar ko hamesha sangkat se bachake rakhein aur hamesha khush rakhein.
+            </p>
+            <p style="color: #ff4500; font-weight: bold; font-size: 1.3rem;">हर हर महादेव!</p>
+            <button id="replyBtn" class="reply-btn" onclick="sendReply()">Reply kijiye ✨</button>
+            <div id="sent-msg">Aapka reply Biswajit ke paas pahunch gaya! ❤️</div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Setup
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtbZ__g_HmrV0jzMGP6EJY3UGt3VG7LMw",
+            authDomain: "biswajit-rabha-hacker-panel.firebaseapp.com",
+            databaseURL: "https://biswajit-rabha-hacker-panel-default-rtdb.firebaseio.com/",
+            projectId: "biswajit-rabha-hacker-panel",
+            storageBucket: "biswajit-rabha-hacker-panel.appspot.com",
+            messagingSenderId: "7099517202",
+            appId: "1:7099517202:web:7196628d00236a003369b7"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function openSurprise() {
+            var audio = document.getElementById('bgMusic');
+            audio.play().catch(e => console.log("Audio play failed"));
+            document.getElementById('balloon-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function sendReply() {
+            // Direct Reply without WhatsApp
+            database.ref('special_wishes/').push({
+                sender: "Krishna Devi Rabha",
+                message: "Happy Mahashivratri (Received)",
+                timestamp: new Date().toLocaleString()
+            }).then(() => {
+                document.getElementById('replyBtn').style.display = 'none';
+                document.getElementById('sent-msg').style.display = 'block';
+            }).catch((error) => {
+                alert("Error: " + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
